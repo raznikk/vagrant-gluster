@@ -2,12 +2,14 @@
 - name: Vagrant basic playbook
   hosts: all
   connection: smart
-
+  
   tasks:
+
     - name: Install extra packages for test environment
       yum:
         name: "{{item}}"
         state: installed
+        disable_gpg_check: true
       with_items:
         - git
         - epel-release
@@ -17,6 +19,7 @@
       yum:
         name: "{{item}}"
         state: installed
+        disable_gpg_check: true
       with_items:
         - samba
         - glusterfs-server
@@ -33,8 +36,9 @@
         enabled: yes
         state: started
 
-    - name: Set up firewalld
+    - name: Set up firewalld to use gluster
       firewalld:
         service: glusterfs
         permanent: true
         state: enabled
+
