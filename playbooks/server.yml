@@ -1,0 +1,6 @@
+---
+- name: Gluster Server
+  hosts: server*
+  connection: smart
+
+  tasks:
