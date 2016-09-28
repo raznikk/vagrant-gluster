@@ -37,15 +37,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       server.vm.network :private_network, ip: "172.16.17.#{100+machine_id}"
       server.landrush.host_interface = 'eth1'
 
-      server.vm.provision :ansible_local do |ansible|
-        ansible.sudo = true
-        ansible.playbook = 'playbooks/default.yml' 
+      if machine_id == N
+        server.vm.provision :ansible do |ansible|
+          ansible.sudo = true
+          ansible.limit = "all"
+          ansible.playbook = 'playbooks/default.yml' 
+        end
       end
 
-      server.vm.provision :ansible_local do |ansible|
-        ansible.sudo = true
-        ansible.playbook = 'playbooks/server.yml'
-      end
+      #server.vm.provision :ansible_local do |ansible|
+      #  ansible.sudo = true
+      #  ansible.playbook = 'playbooks/server.yml'
+      #end
     end
   end
     
