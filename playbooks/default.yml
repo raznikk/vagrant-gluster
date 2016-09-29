@@ -13,7 +13,7 @@
       with_items:
         - git
         - epel-release
-        - centos-release-gluster38
+        - centos-release-gluster36
 
     - name: Install Gluster Server components
       yum:

@@ -3,10 +3,11 @@
 
 VAGRANTFILE_API_VERSION = "2"
 N = 3
+DISK = 'disk2.vdi'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "centos/7"
+  config.vm.box = "geerlingguy/centos7"
   config.vm.box_check_update = true
 
   # Currently broken with Vagrant 1.8.5, at least on Mac OS
