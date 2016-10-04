@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       server.vm.provider "virtualbox" do |vb|
         vb.customize ["createhd",  "--filename", ".disks/machine#{machine_id}_disk0", "--size", "4096"]
         vb.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata"]
-        vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "2, "--type", "hdd", "--medium", ".disks/machine#{machine_id}_disk0.vdi"]
+        vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "2", "--type", "hdd", "--medium", ".disks/machine#{machine_id}_disk0.vdi"]
       end
 
       if machine_id == N
