@@ -1,6 +1,7 @@
 ---
-- name: Gluster Server
+- name: Build Gluster trusted pool
   hosts: server*
   connection: smart
 
   tasks:
+    

@@ -1,0 +1,23 @@
+---
+- name: Gluster Firewall playbook
+  hosts: server*
+  connection: smart
+  
+  tasks:
+    - name: Enable and start glusterd
+      service:
+        name: glusterd
+        enabled: yes
+        state: started
+
+    - name: Enable and start firewalld
+      service:
+        name: firewalld
+        enabled: yes
+        state: started
+
+    - name: Set up firewalld to use gluster
+      firewalld:
+        service: glusterfs
+        permanent: true
+        state: enabled

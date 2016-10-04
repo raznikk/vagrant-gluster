@@ -1,11 +1,11 @@
 ---
-- name: Vagrant basic playbook
-  hosts: all
+- name: Gluster installation playbook
+  hosts: server*
   connection: smart
   
   tasks:
 
-    - name: Install extra packages for test environment
+    - name: Install necessary packages
       yum:
         name: "{{item}}"
         state: installed
@@ -13,7 +13,7 @@
       with_items:
         - git
         - epel-release
-        - centos-release-gluster36
+        - centos-release-gluster38
 
     - name: Install Gluster Server components
       yum:
@@ -23,22 +23,10 @@
       with_items:
         - samba
         - glusterfs-server
+        - glusterfs-rdma
 
     - name: Enable and start glusterd
       service:
         name: glusterd
         enabled: yes
         state: started
-
-    - name: Enable and start firewalld
-      service:
-        name: firewalld
-        enabled: yes
-        state: started
-
-    - name: Set up firewalld to use gluster
-      firewalld:
-        service: glusterfs
-        permanent: true
-        state: enabled
-
