@@ -3,7 +3,6 @@
 
 VAGRANTFILE_API_VERSION = "2"
 N = 3
-DISK = 'disk2.vdi'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -14,7 +13,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false
 
   # Folder Synchronization is somewhat important for developing
-  config.vm.synced_folder "./", "/vagrant"
+  config.vbguest.auto_update = true
+  config.vm.synced_folder "./", "/vagrant", type: "virtualbox"
 
   #===
   # VirtualBox provider
@@ -34,9 +34,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       server.vm.network :private_network, ip: "172.16.17.#{100+machine_id}"
 
       server.vm.provider "virtualbox" do |vb|
-        vb.customize ["createhd",  "--filename", ".disks/machine#{machine_id}_disk0", "--size", "4096"]
-        vb.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata"]
-        vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "2", "--type", "hdd", "--medium", ".disks/machine#{machine_id}_disk0.vdi"]
+        if not File.exist?(".disks/machine#{machine_id}_disk0.vdi")
+          vb.customize ["createhd",  "--filename", ".disks/machine#{machine_id}_disk0", "--size", "4096"]
+          vb.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata"]
+          vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "2", "--type", "hdd", "--medium", ".disks/machine#{machine_id}_disk0.vdi"]
+        end
       end
 
       if machine_id == N
