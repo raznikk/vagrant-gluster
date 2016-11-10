@@ -1,0 +1,59 @@
+---
+- name: Set Up Logical Volumes
+  hosts: server*
+  connection: smart
+
+  tasks:
+    - name: Initialize vgs
+      lvg:
+        pvs: /dev/sdb
+        vg: gtest
+        state: present
+
+    - name: Initialize Thin Pool
+      lvol:
+        lv: "thinpool"
+        vg: gtest
+        size: "4000"
+        opts: "-T"
+        force: yes
+
+    - name: Initialize bricks
+      command: "lvcreate -V 1000 -T gtest/thinpool -n {{item}}"
+      args:
+        creates: "/dev/gtest/{{item}}"
+      with_items:
+        - "lvbrick1"
+        - "lvbrick2"
+        - "lvbrick3"
+
+    - name: Initialize the FS
+      filesystem:
+        dev: "{{item}}"
+        fstype: xfs
+        opts: "-i size=512"
+      with_items:
+        - "/dev/gtest/lvbrick1"
+        - "/dev/gtest/lvbrick2"
+        - "/dev/gtest/lvbrick3"
+
+    - name: Create brick directories
+      file:
+        path: "/gluster/brick"
+        state: directory
+        mode: '0755'
+
+    - name: FS Mounts
+      mount:
+        name: "{{item.name}}"
+        src: "{{item.src}}"
+        fstype: xfs
+        opts: rw
+        state: mounted
+      with_items:
+        - name: /gluster/brick/brick1
+          src: /dev/gtest/lvbrick1
+        - name: /gluster/brick/brick2
+          src: /dev/gtest/lvbrick2
+        - name: /gluster/brick/brick3
+          src: /dev/gtest/lvbrick3

@@ -48,8 +48,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           ansible.playbook = 'playbooks/gluster.yml' 
         end
       end
-
     end
   end
-    
+
+  config.vm.define "client" do |client|
+    client.vm.hostname = "client.gluster.dev"
+    client.vm.network :private_network, ip: "172.16.17.10"
+    client.vm.provider "virtualbox"
+  end
 end

@@ -2,3 +2,4 @@
 - include: 01-install.yml
 - include: 02-firewall.yml
 - include: 03-pool.yml
+- include: 04-lvm.yml

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == "save" ]]; then
+    vagrant snapshot save server1 s1
+    vagrant snapshot save server2 s2
+    vagrant snapshot save server3 s3
+fi
+
+if [[ "$1" == "delete" ]]; then
+    vagrant snapshot delete server1 s1
+    vagrant snapshot delete server2 s2
+    vagrant snapshot delete server3 s3
+fi
+
+if [[ "$1" == "restore" ]]; then
+    vagrant snapshot restore server1 s1
+    vagrant snapshot restore server2 s2
+    vagrant snapshot restore server3 s3
+fi
