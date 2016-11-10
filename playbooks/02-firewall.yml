@@ -4,12 +4,6 @@
   connection: smart
   
   tasks:
-    - name: Enable and start glusterd
-      service:
-        name: glusterd
-        enabled: yes
-        state: started
-
     - name: Enable and start firewalld
       service:
         name: firewalld
@@ -21,3 +15,8 @@
         service: glusterfs
         permanent: true
         state: enabled
+
+    - name: Restart firewalld
+      service:
+        name: firewalld
+        state: restarted

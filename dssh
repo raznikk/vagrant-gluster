@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+for a in `seq 1 3`
+do
+    echo "server${a}"
+    echo "==="
+    vagrant ssh server${a} -c "$@"
+    echo ""
+    echo ""
+done

@@ -1,7 +1,14 @@
 ---
-- name: Build Gluster trusted pool
+- name: Build Gluster hosts file
   hosts: server*
   connection: smart
 
   tasks:
-    
+    - name: Add hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: "{{ hostvars[item].ansible_eth1.ipv4.address }} {{item}}"
+        state: present
+      when: hostvars[item].ansible_eth1.ipv4.address is defined
+      with_items: "{{groups.all}}"
