@@ -1,5 +1,5 @@
 ---
-- include: 01-install.yml
-- include: 02-firewall.yml
-- include: 03-pool.yml
-- include: 04-lvm.yml
+- include: gluster-setup/01-install.yml
+- include: gluster-setup/02-firewall.yml
+- include: gluster-setup/03-pool.yml
+- include: gluster-setup/04-lvm.yml

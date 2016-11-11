@@ -39,7 +39,7 @@
 
     - name: Create brick directories
       file:
-        path: "/gluster/brick"
+        path: "/gluster"
         state: directory
         mode: '0755'
 
@@ -51,9 +51,9 @@
         opts: rw
         state: mounted
       with_items:
-        - name: /gluster/brick/brick1
+        - name: /gluster/brick1
           src: /dev/gtest/lvbrick1
-        - name: /gluster/brick/brick2
+        - name: /gluster/brick2
           src: /dev/gtest/lvbrick2
-        - name: /gluster/brick/brick3
+        - name: /gluster/brick3
           src: /dev/gtest/lvbrick3

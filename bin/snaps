@@ -17,3 +17,10 @@ if [[ "$1" == "restore" ]]; then
     vagrant snapshot restore server2 s2
     vagrant snapshot restore server3 s3
 fi
+
+if [[ "$1" == "list" ]]; then
+    echo -n "server1: " && vagrant snapshot list server1
+    echo -n "server2: " && vagrant snapshot list server2
+    echo -n "server3: " && vagrant snapshot list server3
+fi
+
