@@ -1,0 +1,26 @@
+---
+- name: Client Setup
+  hosts: client
+  connection: smart
+
+  tasks:
+    - name: Install necessary packages
+      yum:
+        name: "{{item}}"
+        state: installed
+        disable_gpg_check: true
+      with_items:
+        - git
+        - epel-release
+        - centos-release-gluster38
+
+    - name: Install Gluster Client components
+      yum:
+        name: "{{item}}"
+        state: installed
+        disable_gpg_check: true
+      with_items:
+        - glusterfs-fuse
+    
+      
+  

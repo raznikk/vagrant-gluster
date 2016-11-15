@@ -1,0 +1,31 @@
+---
+- name: Client Setup
+  hosts: gdeploy
+  connection: smart
+
+  tasks:
+    - name: Install necessary packages
+      yum:
+        name: "{{item}}"
+        state: installed
+        disable_gpg_check: true
+      with_items:
+        - git
+        - epel-release
+        - centos-release-gluster38
+
+    - name: Copy gdeploy RPM
+      copy:
+        src: gdeploy-2.0-0.noarch.rpm
+        dest: /tmp/gdeploy-2.0-0.noarch.rpm
+
+    - name: Install gdeploy
+      yum:
+        name: "{{item}}"
+        state: installed
+        disable_gpg_check: true
+      with_items:
+        - "/tmp/gdeploy-2.0-0.noarch.rpm"
+    
+      
+  

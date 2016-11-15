@@ -56,4 +56,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     client.vm.network :private_network, ip: "172.16.17.10"
     client.vm.provider "virtualbox"
   end
+
+  config.vm.define "gdeploy" do |gdeploy|
+    gdeploy.vm.hostname = "gdeploy.gluster.dev"
+    gdeploy.vm.network :private_network, ip: "127.16.17.100"
+    gdeploy.vm.provider "virtualbox"
+  end
 end
